@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.createTable("events", (tbl) => {
+  return knex.schema.createTable("events", tbl => {
     tbl.increments();
     tbl.string("type", 255);
     tbl.string("text", 255);
