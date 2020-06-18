@@ -1,11 +1,15 @@
 const db = require("../database/db-config");
 
 module.exports = {
-  addEvent,
-  getEvent,
+  find,
+  add,
 };
 
-function addEvent(event) {
+function find() {
+  return db("events");
+}
+
+async function add(event) {
   const {
     text,
     type,
@@ -16,9 +20,5 @@ function addEvent(event) {
     ts: timestamp,
   } = event;
   const newEvent = { text, type, slack_user, team, channel };
-  return db("events").insert(newEvent);
-}
-
-function getEvent() {
-  return db("events");
+  await db("events").insert(newEvent);
 }
