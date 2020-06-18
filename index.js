@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 const eventRouter = require("./events/eventsRouter");
 
+app.use(express.json());
 app.use("/event", eventRouter);
 app.use(cors());
 app.use(helmet());
