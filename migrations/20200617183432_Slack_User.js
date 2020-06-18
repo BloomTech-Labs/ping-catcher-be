@@ -1,5 +1,5 @@
 exports.up = function (knex) {
-  return knex.schema.createTable('slack_user', (tbl) => {
+  return knex.schema.createTable('slack_user', tbl => {
     tbl.increments();
 
     tbl.string('slack_user', 255).notNullable().unique();
