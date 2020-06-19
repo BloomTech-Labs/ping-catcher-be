@@ -15,11 +15,16 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", challenge, async, (req, res) => {
+router.post("/", challenge, (req, res) => {
   let { event } = req.body;
   // console.log(req);
-  newEvent = await Events.add(event);
-  res.status(200).json(newEvent)
+  Events.add(event)
+    .then((respEvent) => {
+      res.status(200).json(respEvent);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "problem with database", err });
+    });
 });
 
 module.exports = router;
