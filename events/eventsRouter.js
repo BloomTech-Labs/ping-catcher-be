@@ -1,26 +1,24 @@
 const express = require("express");
-const Events = require("./eventsModel");
+const Events = require("./eventsModel.js");
+
+const challenge = require("./challenge-middleware");
 
 const router = express.Router();
 
-router.post("/", (req, res) => {
-  console.log(req.body);
-  if (req.body.challenge) {
-    res.status(200);
-    res.contentType("text/plain");
-    console.log(req.body);
-    res.send(req.body.challenge);
-  } else {
-    Events.addEvent(req.body.event);
-  }
+router.get("/", (req, res) => {
+  Events.find()
+    .then((event) => {
+      res.status(200).json(event);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "problem getting events", err });
+    });
 });
 
-router.get("/event", (req, res) => {
-  Events.getEvent().then((event) => {
-    console.log(event);
-    res.status(200);
-    res.send(event);
-  });
+router.post("/", challenge, async, (req, res) => {
+  let { event } = req.body;
+  // console.log(req);
+  let newEvent = await Events.add(event);
 });
 
 module.exports = router;
