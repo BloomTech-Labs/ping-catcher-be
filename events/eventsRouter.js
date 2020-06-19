@@ -17,7 +17,6 @@ router.get("/", (req, res) => {
 
 router.post("/", challenge, (req, res) => {
   let { event } = req.body;
-  // console.log(req);
   Events.add(event)
     .then((respEvent) => {
       res.status(200).json(respEvent);

@@ -14,11 +14,11 @@ function add(event) {
     text,
     type,
     event_ts: event_timestamp,
-    user: slack_user,
+    user: slack_user_id,
     team,
     channel,
     ts: timestamp,
   } = event;
-  const newEvent = { text, type, slack_user, team, channel };
+  const newEvent = { type, text, slack_user_id, team, channel };
   return db("events").insert(newEvent);
 }
