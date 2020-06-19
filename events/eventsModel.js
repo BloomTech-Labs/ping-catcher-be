@@ -9,7 +9,7 @@ function find() {
   return db("events");
 }
 
-async function add(event) {
+function add(event) {
   const {
     text,
     type,
@@ -20,5 +20,6 @@ async function add(event) {
     ts: timestamp,
   } = event;
   const newEvent = { text, type, slack_user, team, channel };
-  await db("events").insert(newEvent);
+  db("events").insert(newEvent);
+  return newEvent;
 }

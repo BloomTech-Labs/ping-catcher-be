@@ -1,6 +1,8 @@
 const express = require("express");
 const Events = require("./eventsModel.js");
 
+const challenge = require("./challenge-middleware");
+
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -13,22 +15,10 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
-  const event = req.body;
-
-  Events.add(event)
-    .then((event) => {
-      if (event.challenge) {
-        res.status(200);
-        res.contentType("text/plain");
-        res.send(event.challenge);
-      } else {
-        Events.add(event);
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "problem with database", err });
-    });
+router.post("/", challenge, async, (req, res) => {
+  let { event } = req.body;
+  // console.log(req);
+  let newEvent = await Events.add(event);
 });
 
 module.exports = router;
