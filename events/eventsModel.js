@@ -20,6 +20,5 @@ function add(event) {
     ts: timestamp,
   } = event;
   const newEvent = { text, type, slack_user, team, channel };
-  db("events").insert(newEvent);
-  return newEvent;
+  return db("events").insert(newEvent);
 }

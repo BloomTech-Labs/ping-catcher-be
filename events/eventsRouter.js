@@ -18,7 +18,8 @@ router.get("/", (req, res) => {
 router.post("/", challenge, async, (req, res) => {
   let { event } = req.body;
   // console.log(req);
-  let newEvent = await Events.add(event);
+  newEvent = await Events.add(event);
+  res.status(200).json(newEvent)
 });
 
 module.exports = router;
