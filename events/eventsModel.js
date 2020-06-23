@@ -15,11 +15,12 @@ function add(event) {
     type,
     event_ts: event_timestamp,
     user,
+    user: slack_username,
     team,
     channel,
     ts: timestamp,
   } = event;
   const slack_user_id = Number(user); //Do a find for user, return users id
-  const newEvent = { type, text, slack_user_id, team, channel };
+  const newEvent = { type, text, slack_user_id, slack_username, team, channel};
   return db("events").insert(newEvent);
 }
