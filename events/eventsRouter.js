@@ -37,6 +37,7 @@ router.post('/verifyUser', (req, res) => {
         res.status(200).json(res)
       } else {
         Users.add(preferred_username)
+        res.status(201).json(res)
       }
     })
     .catch(err => {
