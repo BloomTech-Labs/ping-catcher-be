@@ -1,6 +1,7 @@
 const express = require("express");
 const Events = require("./eventsModel.js");
 const SlackUser = require('./slackUserModel.js');
+const Users = require('./usersModel');
 
 const challenge = require("./challenge-middleware");
 
@@ -27,18 +28,20 @@ router.post("/", challenge, (req, res) => {
     });
 });
 
-router.post('/newUser', (req, res) => {
-  const {user} = req.body;
+router.post('/verifyUser', (req, res) => {
+  const {preferred_username} = req.body;
   
-  SlackUser.findByName(user)
+  Users.findByName(preferred_username)
     .then(res => {
       if (res) {
-        SlackUser.findByName(res)
         res.status(200).json(res)
       } else {
-        SlackUser.add(user)
+        Users.add(preferred_username)
+        res.status(201).json(res)
       }
     })
-
+    .catch(err => {
+      res.status(500).json(err)
+    })
 })
 module.exports = router;
