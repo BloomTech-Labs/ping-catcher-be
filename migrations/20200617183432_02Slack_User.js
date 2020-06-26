@@ -3,7 +3,7 @@ exports.up = function (knex) {
     tbl.increments();
 
     tbl.string('slack_user', 255).notNullable().unique();
-    tbl.integer('user_id').notNullable().references("users.id").unsigned().onDelete("CASCADE") //change to be nullable
+    tbl.integer('user_id').references("users.id").unsigned().onDelete("CASCADE");
   });
 };
 
