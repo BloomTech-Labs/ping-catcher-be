@@ -29,14 +29,14 @@ router.post("/", challenge, (req, res) => {
 });
 
 router.post('/verifyUser', (req, res) => {
-  const {preferred_username} = req.body;
+  const {preferred_username, sub} = req.body;
   
   Users.findByName(preferred_username)
     .then(res => {
       if (res) {
         res.status(200).json(res)
       } else {
-        Users.add(preferred_username)
+        Users.add(preferred_username, sub)
         res.status(201).json(res)
       }
     })
