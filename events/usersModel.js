@@ -5,8 +5,8 @@ module.exports = {
   findByName,
 };
 
-function add(username) {
-  return db("users").insert({ username });
+function add(username, sub) {
+  return db("users").insert({ username, password: sub });
 }
 
 function findByName(username) {
