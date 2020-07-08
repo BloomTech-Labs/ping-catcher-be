@@ -11,7 +11,8 @@ function add(slack_user) {
 }
 
 async function findByName(slack_user) {
-     return await db('slack_user').select("id").where({slack_user}).first();
+     let res =  await db('slack_user').select("id").where({slack_user}).first();
+     return res;
 }
 
 function findById({id}) {
