@@ -24,13 +24,13 @@ function add(event) {
   let slack_user_id;
 
   const user = slackUser.findByName(slack_username) 
-  if (user.length === 0) {
+  if (!user) {
     slack_user_id = slackUser.add(slack_username)
     } else {
       slack_user_id = user.id
   };
   // console.log(slack_username);
   // console.log(slack_user_id);
-  const newEvent = { type, text, slack_user_id, team, channel};
+  const newEvent = { type, text, slack_user_id, team, channel, timestamp, event_timestamp};
   return db("events").insert(newEvent);
 }
