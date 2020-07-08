@@ -15,7 +15,7 @@ function add(event) {
     text,
     type,
     event_ts: event_timestamp,
-    user: slack_username,
+    // user: slack_username,
     team,
     channel,
     ts: timestamp,
@@ -23,13 +23,13 @@ function add(event) {
   console.log(event);
   let slack_user_id;
 
-  const user = slackUser.findByName(slack_username) 
+  const userId = slackUser.findByName(event.user) 
   if (!user) {
-    slack_user_id = slackUser.add(slack_username)
+    slack_user_id = slackUser.add({slack_username: event.user})
     console.log("if", slack_user_id)
     } else {
-      slack_user_id = user.id
-      console.log("else", slack_user_id)
+      slack_user_id = userId
+      console.log("else", userId)
   };
   // console.log(slack_username);
   // console.log(slack_user_id);
