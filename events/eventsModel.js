@@ -20,8 +20,7 @@ function add(event) {
     ts: timestamp,
   } = event;
   const slack_user_id = Number(slack_username); //Do a find for user, return users id
-  console.log(slack_username);
-  const newEvent = { type, text, slack_user_id, slack_username, team, channel};
-  console.log(slack_username);
+  console.log(slack_user_id);
+  const newEvent = { type, text, slack_user_id, team, channel};
   return db("events").insert(newEvent);
 }
