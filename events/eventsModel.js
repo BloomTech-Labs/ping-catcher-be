@@ -1,4 +1,5 @@
 const db = require("../database/db-config");
+const slackUser = require('./slackUserModel');
 
 module.exports = {
   find,
@@ -19,7 +20,16 @@ function add(event) {
     channel,
     ts: timestamp,
   } = event;
-  const slack_user_id = Number(slack_username); //Do a find for user, return users id
+  
+  let slack_user_id;
+
+  const user = slackUser.findByName(slack_username) 
+  if (user.length === 0) {
+    slack_user_id = slackUser.add(slack_username)
+    } else {
+      slack_user_id = user.id
+  };
+  
   console.log(slack_user_id);
   const newEvent = { type, text, slack_user_id, team, channel};
   return db("events").insert(newEvent);
