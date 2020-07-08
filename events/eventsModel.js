@@ -26,10 +26,10 @@ function add(event) {
   const user = slackUser.findByName(slack_username) 
   if (!user) {
     slack_user_id = slackUser.add(slack_username)
-    console.log(slack_user_id)
+    console.log("if", slack_user_id)
     } else {
       slack_user_id = user.id
-      console.log(slack_user_id)
+      console.log("else", slack_user_id)
   };
   // console.log(slack_username);
   // console.log(slack_user_id);
