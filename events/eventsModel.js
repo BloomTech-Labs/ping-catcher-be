@@ -15,22 +15,23 @@ function add(event) {
     text,
     type,
     event_ts: event_timestamp,
+    slack_user_id,
     // user: slack_username,
     team,
     channel,
     ts: timestamp,
   } = event;
-  console.log(event);
-  let slack_user_id;
+  // console.log(event);
+  // let slack_user_id;
 
-  const userId = slackUser.findByName(event.user) 
-  if (!userId) {
-    slack_user_id = slackUser.add({slack_username: event.user})
-    console.log("if", slack_user_id)
-    } else {
-      slack_user_id = userId
-      console.log("else", userId)
-  };
+  // const userId = slackUser.findByName(event.user) 
+  // if (!userId) {
+  //   slack_user_id = slackUser.add({slack_username: event.user})
+  //   console.log("if", slack_user_id)
+  //   } else {
+  //     slack_user_id = userId
+  //     console.log("else", userId)
+  // };
   // console.log(slack_username);
   // console.log(slack_user_id);
   const newEvent = { type, text, slack_user_id, team, channel, timestamp, event_timestamp};
