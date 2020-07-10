@@ -19,13 +19,24 @@ router.get("/", (req, res) => {
 
 router.post("/", challenge, (req, res) => {
   let { event } = req.body;
-  Events.add(event)
+
+  SlackUser.findByName(event.user)
+  .then(userId => {
+    if (!userId) {
+    slack_user_id = SlackUser.add({slack_username: event.user})
+    console.log("if", slack_user_id)
+    } else {
+      slack_user_id = userId
+      console.log("else", userId)
+  };
+  Events.add({...event, slack_user_id})
     .then((respEvent) => {
       res.status(200).json(respEvent);
     })
     .catch((err) => {
       res.status(500).json({ message: "problem with database", err });
     });
+  }) 
 });
 
 router.post('/verifyUser', (req, res) => {
