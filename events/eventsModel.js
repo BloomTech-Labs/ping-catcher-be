@@ -15,7 +15,7 @@ function add(event) {
     text,
     type,
     event_ts: event_timestamp,
-    slack_user_id,
+    // slack_user_id,
     // user: slack_username,
     team,
     channel,
