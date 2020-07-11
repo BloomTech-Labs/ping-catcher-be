@@ -4,9 +4,9 @@
   "description": "- Authentication.\r - Express Middleware.\r - Password Hashing.\r - Sessions\r - Cookies",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "server": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "test": "cross-env NODE_ENV=testing jest --watch"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,11 @@
     "pg": "^8.2.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.3"
+    "cross-env": "^7.0.2",
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
+  },
+  "jest": {
+    "testEnvironment": "node"
   }
 }
