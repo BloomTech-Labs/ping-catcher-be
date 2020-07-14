@@ -7,7 +7,7 @@ describe('events model', () => {
       await Events.add({text: "testing"});
 
       const addedEvents = await db('events')
-      expect(addedEvents).toHaveLength(2);
+      expect(addedEvents).toHaveLength(1);
     });
 
     it('should insert event into the db', async () => {
