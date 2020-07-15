@@ -31,7 +31,7 @@ router
   .post("/", challenge, (req, res) => {
     let { event } = req.body;
 // Search database for existing user
-    SlackUser.findByName({ id }).then((existsId) => {
+    SlackUser.findByName({ slack_user }).then((existsId) => {
       existsId  
         ? addEvent({...event, slack_user_id: existsId}) // If user is found
         : SlackUser.add({ slack_user }).then((userId) => {// If no user is found add user into database
