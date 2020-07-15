@@ -17,26 +17,44 @@ router.get("/", (req, res) => {
     });
 });
 
-router.post("/", challenge, (req, res) => {
-  let { event } = req.body;
+  function addEvent(event) {
+    Events.add(event) //Add event to database
+      .then((respEvent) => {
+        res.status(200).json(respEvent);
+      })
+      .catch((err) => {
+        res.status(500).json({ message: "problem with database", err });
+      });
+  }
 
-  // SlackUser.findByName(event.user)
-  // .then(userId => {
-  //   if (!userId) {
-  //   slack_user_id = SlackUser.add({slack_username: event.user})
-  //   console.log("if", slack_user_id)
-  //   } else {
-  //     slack_user_id = userId
-  //     console.log("else", userId)
-  // };
-  Events.add(event)
-    .then((respEvent) => {
-      res.status(200).json(respEvent);
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "problem with database", err });
-    });
+router
+  .post("/", challenge, (req, res) => {
+    let { event } = req.body;
+// Search database for existing user
+    SlackUser.findByName({ id }).then((existsId) => {
+      existsId  
+        ? addEvent({...event, slack_user_id: existsId}) // If user is found
+        : SlackUser.add({ slack_user }).then((userId) => {// If no user is found add user into database
+          addEvent({...event, slack_user_id: userId})
+          })
+          .catch((err) => {
+            res.status(500).json({message: "Could not add slack user to database", err})
+          })
+    }).catch((err) => {
+      res.status(500).json({message: "Could not find id", err})
   });
+});
+
+    // SlackUser.findByName(event.user)
+    // .then(userId => {
+    //   if (!userId) {
+    //   slack_user_id = SlackUser.add({slack_username: event.user})
+    //   console.log("if", slack_user_id)
+    //   } else {
+    //     slack_user_id = userId
+    //     console.log("else", userId)
+    // };
+
 // });
 
 router.post('/verifyUser', (req, res) => {

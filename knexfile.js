@@ -9,7 +9,7 @@ module.exports = {
 
   testing: {
     client: "pg",
-    connection: process.env.HEROKU_POSPTGRESQL_AMBER_URL,
+    connection: process.env.HEROKU_POSTGRESQL_AMBER_URL,
     pool: {
       min: 2,
       max: 10,
