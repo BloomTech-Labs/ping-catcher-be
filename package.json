@@ -6,7 +6,8 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env NODE_ENV=testing jest --watch"
+    "test": "cross-env NODE_ENV=testing jest --watch",
+    "coverage": "CI=true yarn test --coverage --watchAll=false || true"
   },
   "repository": {
     "type": "git",
