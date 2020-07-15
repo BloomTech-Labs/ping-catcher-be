@@ -1,4 +1,3 @@
-// Update with your config settings.
 
 module.exports = {
   development: {
@@ -10,7 +9,7 @@ module.exports = {
 
   testing: {
     client: "pg",
-    connection: process.env.DATABASE_URL,
+    connection: process.env.HEROKU_POSPTGRESQL_AMBER_URL,
     pool: {
       min: 2,
       max: 10,
