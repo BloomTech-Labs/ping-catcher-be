@@ -34,7 +34,8 @@ router
 // Search database for existing user
     SlackUser.findByName({ slack_user: event.user }).then((existsId) => {
       console.log("Finding by name", {slack_user: event.user})
-      existsId  
+      console.log('exists id', existsId)
+      Number(existsId) > 0
         ? addEvent({...event, slack_user_id: existsId}) // If user is found
         : SlackUser.add({ slack_user }).then((userId) => {// If no user is found add user into database
           addEvent({...event, slack_user_id: userId})
