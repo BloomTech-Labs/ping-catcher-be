@@ -10,9 +10,8 @@ function add(slack_user) {
     return db('slack_user').insert(slack_user).returning('id');
 }
 
-async function findByName(slack_user) {
-     let res =  await db('slack_user').select("id").where({slack_user}).first();
-     return res;
+function findByName(slack_user) {
+    return db('slack_user').select("id").where({slack_user}).first();
 }
 
 function findById({id}) {
