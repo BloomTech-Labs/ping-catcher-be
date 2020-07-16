@@ -7,11 +7,12 @@ module.exports = {
 }
 
 function add(slack_user) {
-    return db('slack_user').insert(slack_user).returning('id');
+    return db('slack_user').insert(slack_user);
 }
 
-function findByName(slack_user) {
-    return db('slack_user').select("id").where({slack_user}).first();
+function findByName({slack_user}) {
+    console.log(slack_user)
+    return db('slack_user').where({slack_user});
 }
 
 function findById({id}) {
