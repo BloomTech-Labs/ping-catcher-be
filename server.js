@@ -6,15 +6,16 @@ const bodyParser = require("body-parser");
 const eventRouter = require("./events/eventsRouter");
 
 const server = express();
-
-server.use(express.json());
-server.use(helmet());
 server.use(cors());
+server.use(express.json());
 server.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
+server.use(helmet());
+
+
 
 server.use("/event", eventRouter);
 

@@ -5,8 +5,8 @@ module.exports = {
   findByName,
 };
 
-function add(username, sub) {
-  return db("users").insert({ username, password: sub });
+function add({slack_user, username, password}) {
+  return db("users").insert({slack_user, username, password }).returning('id');
 }
 
 function findByName(username) {
