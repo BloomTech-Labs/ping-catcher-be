@@ -21,6 +21,7 @@ function add(event) {
     channel,
     ts: timestamp,
   } = event;
+  console.log(event);
   // console.log(event);
   // let slack_user_id;
 

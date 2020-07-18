@@ -2,6 +2,16 @@
 const request = require('supertest');
 const server = require("../server");
 
+describe('GET /', () => {
+  it('should return 200', () => {
+    return request(server).get('/event')
+    .then(res => {
+      console.log(res.text)
+      expect(res.status).toBe(200)
+    })
+    })
+  })
+
 // describe('events model', () => {
 //   describe('insert', () => {
 //     it('should insert events into the db', async () => {
@@ -28,25 +38,12 @@ const server = require("../server");
 //     })
 //   })
 // })
-describe('GET /', () => {
-  it('should return 200', () => {
-    return request(server)
-    .get('/event')
-    .set("Accept", "application/json")
-    .then(res => {
-      console.log(res.body)
-      const a = Object.getPrototypeOf(Array());
-      const b = Object.getPrototypeOf(res.body);
-      console.log(b)
-      expect(a === b).toBe(true);
-    })
-  })
-})
+
 
 describe('Post request',() => {
   it('inserts event into database', function(done) {
     request(server)
-      .post('/event/new')
+      .post('/event')
       .send({event:{
         client_msg_id: 'b0638bde-c139-4f5c-8d86-d7577e86ab54',
          type: 'message',
