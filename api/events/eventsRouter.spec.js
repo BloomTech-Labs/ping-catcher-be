@@ -44,14 +44,14 @@ describe('Post request',() => {
     request(server)
       .post('/event')
       .send({event:{
-        client_msg_id: 'b0638bde-c139-4f5c-8d86-d7577e86ab54',
+        client_msg_id: '1',
          type: 'message',
          text: 'Event !',
          user: 'Kyle',
-         ts: '1594863453.000200',
-         team: 'T014X2Z6M6Z',
+         ts: '1',
+         team: '1',
          blocks: [ { type: 'rich_text', block_id: '37x', elements: [Array] } ],
-         channel: 'C014RMZFEMU',
+         channel: '1',
          event_ts: '1594863453.000200',
          channel_type: 'channel'
       }})
