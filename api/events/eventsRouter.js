@@ -1,9 +1,10 @@
 const express = require("express");
 const Events = require("./eventsModel.js");
-const SlackUser = require('./slackUserModel.js');
-const Users = require('./usersModel');
+const SlackUser = require('../slackUsers/slackUserModel.js');
+const Users = require('../users/usersModel');
 
-const challenge = require("./challenge-middleware");
+const challenge = require("../middleware/challenge-middleware");
+
 
 const router = express.Router();
 
@@ -27,13 +28,26 @@ router.get("/", (req, res) => {
       });
   }
 
+  router.get('/id/:slack_user', (req, res) => {
+    const {slack_user} = req.params;
+    console.log(req.params)
+    SlackUser.find({slack_user})
+     .then(res => {
+       res.send(id)
+       console.log(res)
+     })
+     .catch(err => {
+       res.json({message: "couldn't find id", err})
+     })
+  })
+
 router.post("/", challenge, (req, res) => {
   let { event } = req.body;
   console.log("eventRouter");
   // Search database for existing user
-  SlackUser.findByName({ slack_user: event.user })
-    .then((existsId) => {
-      console.log(existsId)
+  SlackUser.findById({ id: event.user })
+    .then((id) => {
+      console.log("id exists!", id)
         ? addEvent({ ...event, slack_user_id: existsId }) // If user is found
         : Users.add({
             slack_user: event.api_app_id,

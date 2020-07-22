@@ -1,8 +1,9 @@
-const db = require("../database/db-config");
+const db = require("../../database/db-config");
 
 module.exports = {
   add,
   findByName,
+  find
 };
 
 function add({slack_user, username, password}) {
@@ -11,4 +12,8 @@ function add({slack_user, username, password}) {
 
 function findByName(username) {
   return db("users").where({ username }).first();
+}
+
+function find() {
+  return db("users");
 }

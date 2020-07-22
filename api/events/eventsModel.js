@@ -1,5 +1,4 @@
-const db = require("../database/db-config");
-const slackUser = require('./slackUserModel');
+const db = require("../../database/db-config");
 
 module.exports = {
   find,
