@@ -1,12 +1,11 @@
 
 const request = require('supertest');
-const server = require("../server");
+const server = require("../../server");
 
 describe('GET /', () => {
   it('should return 200', () => {
     return request(server).get('/event')
     .then(res => {
-      console.log(res.text)
       expect(res.status).toBe(200)
     })
     })
@@ -48,7 +47,7 @@ describe('Post request',() => {
         client_msg_id: 'b0638bde-c139-4f5c-8d86-d7577e86ab54',
          type: 'message',
          text: 'Event !',
-         user: 'U014YE5KZ34',
+         user: 'Kyle',
          ts: '1594863453.000200',
          team: 'T014X2Z6M6Z',
          blocks: [ { type: 'rich_text', block_id: '37x', elements: [Array] } ],
