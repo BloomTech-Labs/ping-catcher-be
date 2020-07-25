@@ -2,7 +2,7 @@ exports.up = function (knex) {
   return knex.schema.createTable('slack_user', tbl => {
     tbl.increments();
 
-    tbl.string('slack_user', 255).notNullable().unique();
+    tbl.string('slack_username', 255).notNullable().unique();
     tbl.integer('user_id').references("users.id").unsigned().onDelete("CASCADE");
   });
 };
