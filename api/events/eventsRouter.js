@@ -2,6 +2,7 @@ const express = require("express");
 const Events = require("./eventsModel.js");
 const SlackUser = require('../slackUsers/slackUserModel.js');
 const Users = require('../users/usersModel');
+const request = require('request');
 
 const challenge = require("../middleware/challenge-middleware");
 
@@ -45,40 +46,46 @@ router.post("/", challenge, (req, res) => {
   let { event } = req.body;
   console.log("eventRouter");
   // Search database for existing user
-  SlackUser.findById({ id: event.user })
-    .then((id) => {
-      console.log("id exists!", id)
-        ? addEvent({ ...event, slack_user_id: existsId }) // If user is found
-        : Users.add({
-            slack_user: event.api_app_id,
-            username: event.team_id,
-            password: event.token,
-          })
-            .then((user_id) => {
-              SlackUser.add({ slack_user, user_id })
-                .then((slack_user_id) => {
-                  // If no user is found add user into database
-                  console.log("if there is no user", slack_user);
-                  addEvent({ ...event, slack_user_id });
-                })
-                .catch((err) => {
-                  res
-                    .status(500)
-                    .json({
-                      message: "Could not add slack user to database",
-                      err,
-                    });
-                });
-            })
-            .catch((err) => {
-              res
-                .status(500)
-                .json({ message: "could not add new user to database", err });
-            });
-    })
-    .catch((err) => {
-      res.status(500).json({ message: "Could not find id", err });
-    });
+  request('http://localhost:5000/slack-user/id/Kyle', (err, response, body) => {
+        console.log("body", body)
+        console.log("res", response)
+        console.log("err", err)
+  })
+
+  // SlackUser.findById({ id: event.user })
+  //   .then((id) => {
+  //     console.log("id exists!", id)
+  //       ? addEvent({ ...event, slack_user_id: existsId }) // If user is found
+  //       : Users.add({
+  //           slack_user: event.api_app_id,
+  //           username: event.team_id,
+  //           password: event.token,
+  //         })
+  //           .then((user_id) => {
+  //             SlackUser.add({ slack_user, user_id })
+  //               .then((slack_user_id) => {
+  //                 // If no user is found add user into database
+  //                 console.log("if there is no user", slack_user);
+  //                 addEvent({ ...event, slack_user_id });
+  //               })
+  //               .catch((err) => {
+  //                 res
+  //                   .status(500)
+  //                   .json({
+  //                     message: "Could not add slack user to database",
+  //                     err,
+  //                   });
+  //               });
+  //           })
+  //           .catch((err) => {
+  //             res
+  //               .status(500)
+  //               .json({ message: "could not add new user to database", err });
+  //           });
+  //   })
+  //   .catch((err) => {
+  //     res.status(500).json({ message: "Could not find id", err });
+  //   });
 });
 
     // SlackUser.findByName(event.user)

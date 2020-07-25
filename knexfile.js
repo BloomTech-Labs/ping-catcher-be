@@ -1,24 +1,33 @@
 
+// module.exports = {
+
+//   testing: {
+//     client: "pg",
+//     connection: process.env.HEROKU_POSTGRESQL_JADE_URL,
+//     pool: {
+//       min: 0,
+//       max: 10,
+//     },
+//     acquireConnectionTimeout: 10000,
+//     migrations: {
+//       directory: "./migrations",
+//     },
+//   },
+
+//   production: {
+//     client: "pg",
+//     connection: process.env.DATABASE_URL,
+//     pool: {
+//       min: 2,
+//       max: 10,
+//     },
+//     migrations: {
+//       directory: "./migrations",
+//     },
+//   },
+// };
+
 module.exports = {
-  development: {
-    client: "pg",
-    connection: {
-      filename: "process.env.DATABASE_URL",
-    },
-  },
-
-  testing: {
-    client: "pg",
-    connection: process.env.TEST_DATABASE_URL,
-    pool: {
-      min: 2,
-      max: 10,
-    },
-    migrations: {
-      directory: "./migrations",
-    },
-  },
-
   production: {
     client: "pg",
     connection: process.env.DATABASE_URL,
