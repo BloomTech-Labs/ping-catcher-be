@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   SlackUser.find()
-    .then((res) => {
-      res.status(200).json(res);
+    .then(slackUser => {
+      res.status(200).json(slackUser);
     })
     .catch((err) => {
       res.status(500).json({ message: "problem getting slack users", err });

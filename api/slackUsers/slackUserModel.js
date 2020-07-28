@@ -1,10 +1,11 @@
-const db = require("../../database/db-config")
+const db = require("../../database/db-config");
 
 module.exports = {
-    add,
+    add, 
+    find,
     findByName,
-    findById,
-    find
+    findById
+   
 }
 
 function add({slack_user}) {

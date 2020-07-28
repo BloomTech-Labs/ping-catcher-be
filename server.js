@@ -21,7 +21,7 @@ server.use(helmet());
 server.use("/event", eventRouter);
 server.use("/users", usersRouter);
 server.use("/rankings", rankingsRouter);
-server.use("/slack-user", slackUserRouter);
+server.use("/slackuser", slackUserRouter);
 
 server.get("/", (req, res) => {
   res.send("<h2>Back end is working</h2>");
