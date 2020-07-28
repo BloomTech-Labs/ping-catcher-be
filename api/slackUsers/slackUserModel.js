@@ -8,8 +8,8 @@ module.exports = {
    
 }
 
-function add({slack_user}) {
-    return db('slack_user').insert(slack_user).returning('id');
+function add({slack_username}) {
+    return db('slack_user').insert(slack_username).returning('id');
 }
 
 function find() {
@@ -26,9 +26,9 @@ function find() {
 //      })
 // }
 
-function findByName({slack_user}) {
-    console.log("slack user = ", slack_user)
-     return db('slack_user').select('id').where({slack_user}).first();
+function findByName({slack_username}) {
+    console.log("slack user = ", slack_username)
+     return db('slack_user').select('id').where({slack_username}).first();
 }
 
 function findById({id}) {

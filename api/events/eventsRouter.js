@@ -30,15 +30,15 @@ router.get("/", (req, res) => {
   }
 
   router.get('/id/:slack_user', (req, res) => {
-    const {slack_user} = req.params;
+    const {slack_username} = req.params;
     console.log(req.params)
-    SlackUser.find({slack_user})
+    SlackUser.findByName({slack_username})
      .then(res => {
-       res.send(id)
+       res.send(slack_username)
        console.log(res)
      })
      .catch(err => {
-       res.json({message: "couldn't find id", err})
+       res.json({message: "couldn't find user", err})
      })
   })
 
@@ -46,7 +46,7 @@ router.post("/", challenge, (req, res) => {
   let { event } = req.body;
   console.log("eventRouter");
   // Search database for existing user
-  request('http://localhost:5000/slackuser/id/Kyle', (err, response, body) => {
+  request('https://ping-catcher-be.herokuapp.com/slackuser/id/Kyle', (err, response, body) => {
         console.log("body", body)
         console.log("res", response)
         console.log("err", err)
