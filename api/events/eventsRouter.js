@@ -46,7 +46,7 @@ router.post("/", challenge, (req, res) => {
   let { event } = req.body;
   console.log("eventRouter");
   // Search database for existing user
-  request('https://ping-catcher-be.herokuapp.com/slackuser/id/Kyle', (err, response, body) => {
+  request('/slackuser/id/Kyle', (err, response, body) => {
         console.log("body", body)
         console.log("res", response)
         console.log("err", err)
