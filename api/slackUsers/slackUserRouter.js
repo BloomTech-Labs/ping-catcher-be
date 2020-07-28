@@ -14,19 +14,22 @@ router.get("/", (req, res) => {
 });
 
 router.get('/id/:slack_user', (req, res) => {
-  const {slack_user} = req.params;
+  const {slack_username} = req.params;
 
-  SlackUser.findByName({slack_user})
-    .then(slackUser => {
-      res.status(200).json({slackUser})
+  SlackUser.findByName({slack_username})
+    .then(slackUsername => {
+      res.status(200).json({slackUsername})
     })
     .catch(err => {
-      res.status(500).json({message: "Could not find user", slack_user, err})
+      res.status(500).json({message: "Could not find user", slack_username, err})
     })
 })
 
 router.post('/newSlackUser', (req, res) => {
   SlackUser.add()
+    .then(newUser => {
+      res.status(301).json({newUser})
+    })
 })
 
 module.exports = router;
