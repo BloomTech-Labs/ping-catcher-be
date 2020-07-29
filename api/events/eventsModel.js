@@ -35,5 +35,5 @@ function add(event) {
   // console.log(slack_username);
   // console.log(slack_user_id);
   const newEvent = { type, text, slack_user, team, channel, timestamp, event_timestamp};
-  return db("events").insert(newEvent).returning('id');
+  return db("events").insert(newEvent).returning('id'); //change to async function?
 }
