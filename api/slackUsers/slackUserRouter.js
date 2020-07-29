@@ -13,15 +13,19 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get('/id/:slack_user', (req, res) => {
+router.get('/id/:slack_username', (req, res) => {
   const {slack_username} = req.params;
 
   SlackUser.findByName({slack_username})
-    .then(slackUsername => {
-      res.status(200).json({slackUsername})
+    .then(slack_username => {
+      if(slack_username) {
+        res.status(200).json({slack_username})
+      } else {
+        res.status(404).json({message: "Slack username not found"})
+      }
     })
     .catch(err => {
-      res.status(500).json({message: "Could not find user", slack_username, err})
+      res.status(500).json({message: "Error accessing the database", err})
     })
 })
 
