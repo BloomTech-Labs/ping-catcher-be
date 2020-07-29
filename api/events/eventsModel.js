@@ -11,6 +11,9 @@ function find() {
 
 function add(event) {
   const {
+    api_app_id,
+    team_id,
+    token,
     text,
     type,
     event_ts: event_timestamp,
