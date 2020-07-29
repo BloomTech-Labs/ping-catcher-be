@@ -9,7 +9,7 @@ module.exports = {
 }
 
 function add({slack_username}) {
-    return db('slack_user').insert(slack_username).returning('id');
+    return db('slack_user').insert({slack_username}).returning('slack_username');
 }
 
 function find() {

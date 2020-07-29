@@ -34,6 +34,6 @@ function add(event) {
   // };
   // console.log(slack_username);
   // console.log(slack_user_id);
-  const newEvent = { type, text, slack_user_id, team, channel, timestamp, event_timestamp};
+  const newEvent = { type, text, slack_user, team, channel, timestamp, event_timestamp};
   return db("events").insert(newEvent).returning('slack_user_id')
 }

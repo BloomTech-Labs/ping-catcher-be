@@ -42,15 +42,44 @@ router.get("/", (req, res) => {
      })
   })
 
-router.post("/", challenge, (req, res) => {
-  let { event } = req.body;
-  console.log("eventRouter");
-  // Search database for existing user
-  request('/slackuser/id/Kyle', (err, response, body) => {
-        console.log("body", body)
-        console.log("res", response)
-        console.log("err", err)
-  })
+  router.post("/", challenge, (req, res) => {
+    let { event } = req.body;
+    SlackUser.findByName({ slack_username: event.user }).then((user) => {
+      console.log(slack_username);
+      console.log("user exists!", user)
+        ? addEvent({ ...event, slack_username }) // if user is found in database, run this code to add the event
+        : Users.add({
+            slack_user: event.api_app_id,
+            username: event.team_id,
+            password: event.token,
+          })  // If user is not found in the database, this code will add the user to the users table in the database
+            .then(user_id => {
+              SlackUser.add({ slack_username, user_id }) // this code will then add the user to the slack user table 
+                .then(slack_username => { 
+                  addEvent({ ...event, slack_username }) // this will then add the event to the events table
+                }) 
+                .catch(err => {
+                  res.status(500).json({message: "Could not add slack user to the database"})
+                })
+            }) 
+            .catch(err => {
+              res.status(500).json({message: "Could not add user to database"})
+            })
+    })
+    .catch(err => {
+      res.status(500).json({message: "Could not find user by id"})
+    })
+  });
+
+// router.post("/", challenge, (req, res) => {
+//   let { event } = req.body;
+//   console.log("eventRouter");
+//   // Search database for existing user
+//   request('/slackuser/id/Kyle', (err, response, body) => {
+//         console.log("body", body)
+//         console.log("res", response)
+//         console.log("err", err)
+//   })
 
   // SlackUser.findById({ id: event.user })
   //   .then((id) => {
@@ -86,7 +115,7 @@ router.post("/", challenge, (req, res) => {
   //   .catch((err) => {
   //     res.status(500).json({ message: "Could not find id", err });
   //   });
-});
+// });
 
     // SlackUser.findByName(event.user)
     // .then(userId => {
