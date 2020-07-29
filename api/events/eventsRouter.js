@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
     });
 });
 
-  function addEvent(event) {
+  function addEvent({event, res}) {
     Events.add(event) //Add event to database
       .then((respEvent) => {
         res.status(200).json(respEvent);
@@ -44,34 +44,36 @@ router.get("/", (req, res) => {
 
   router.post("/", challenge, (req, res) => {
     let { event } = req.body;
-    console.log(req.body)
-    SlackUser.findByName({ slack_username: event.user }).then((result) => {
-      console.log(result)
-      const slack_username = result.slack_username;
-        console.log("after findByName", slack_username)
-        slack_username
-        ? addEvent({ ...event, slack_username }) // if user is found in database, run this code to add the event
-        : Users.add({
-            slack_user: req.body.api_app_id,
-            username: req.body.team_id,
-            password: req.body.token
-          })  // If user is not found in the database, this code will add the user to the users table in the database
-            .then(user_id => {
-              SlackUser.add({ slack_username, user_id }) // this code will then add the user to the slack user table 
-                .then(slack_username => { 
-                  addEvent({ ...event, slack_username }) // this will then add the event to the events table
-                }) 
-                .catch(err => {
-                  res.status(500).json({message: "Could not add slack user to the database"})
-                })
-            }) 
-            .catch(err => {
-              res.status(500).json({message: "Could not add user to database"})
-            })
-    })
-    .catch(err => {
-      res.status(500).json({message: "Could not find user by id"})
-    })
+    console.log(req.body);
+    SlackUser.findByName({ slack_username: event.user })
+      .then((result) => {
+        console.log(result);
+        const slack_username = result.slack_username;
+        addEvent({ event: { ...event, slack_username }, res }); // if user is found in database, run this code to add the event
+      })
+      .catch((err) => {
+        Users.add({
+          slack_user: req.body.api_app_id,
+          username: req.body.team_id,
+          password: req.body.token,
+        }) // If user is not found in the database, this code will add the user to the users table in the database
+          .then((user_id) => {
+            SlackUser.add({ slack_username, user_id }) // this code will then add the user to the slack user table
+              .then((slack_username) => {
+                addEvent({ event: { ...event, slack_username }, res }); // this will then add the event to the events table
+              })
+              .catch((err) => {
+                res
+                  .status(500)
+                  .json({
+                    message: "Could not add slack user to the database",
+                  });
+              });
+          })
+          .catch((err) => {
+            res.status(500).json({ message: "Could not add user to database" });
+          });
+      });
   });
 
 // router.post("/", challenge, (req, res) => {
