@@ -58,16 +58,13 @@ router.get("/", (req, res) => {
           password: req.body.token,
         }) // If user is not found in the database, this code will add the user to the users table in the database
           .then((user_id) => {
+            console.log("after user if", user_id)
             SlackUser.add({ slack_username, user_id }) // this code will then add the user to the slack user table
               .then((slack_username) => {
                 addEvent({ event: { ...event, slack_username }, res }); // this will then add the event to the events table
               })
               .catch((err) => {
-                res
-                  .status(500)
-                  .json({
-                    message: "Could not add slack user to the database",
-                  });
+                res.status(500).json({message: "Could not add slack user to the database"});
               });
           })
           .catch((err) => {
