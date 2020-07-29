@@ -44,9 +44,9 @@ router.get("/", (req, res) => {
 
   router.post("/", challenge, (req, res) => {
     let { event } = req.body;
-    SlackUser.findByName({ slack_username: event.user }).then((user) => {
-      console.log(slack_username);
-      console.log("user exists!", user)
+    SlackUser.findByName({ slack_username: event.user }).then(({slack_username: result}) => {
+      const {slack_username} = result;
+        slack_username
         ? addEvent({ ...event, slack_username }) // if user is found in database, run this code to add the event
         : Users.add({
             slack_user: event.api_app_id,
