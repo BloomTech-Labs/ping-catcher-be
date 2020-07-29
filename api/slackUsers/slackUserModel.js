@@ -8,8 +8,8 @@ module.exports = {
    
 }
 
-function add({slack_username}) {
-    return db('slack_user').insert({slack_username}).returning('slack_username');
+function add({slack_username, user_id}) {
+    return db('slack_user').insert({slack_username, user_id}).returning('slack_username');
 }
 
 function find() {
