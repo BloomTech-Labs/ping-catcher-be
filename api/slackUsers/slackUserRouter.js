@@ -26,9 +26,11 @@ router.get('/id/:slack_user', (req, res) => {
 })
 
 router.post('/newSlackUser', (req, res) => {
-  SlackUser.add()
-    .then(newUser => {
-      res.status(301).json({newUser})
+  const {slack_username, user_id} = req.body;
+
+  SlackUser.add({slack_username, user_id})
+    .then(slack_username => {
+      res.status(301).json({slack_username})
     })
 })
 
