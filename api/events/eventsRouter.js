@@ -44,9 +44,10 @@ router.get("/", (req, res) => {
 
   router.post("/", challenge, (req, res) => {
     let { event } = req.body;
+    console.log(event)
     SlackUser.findByName({ slack_username: event.user }).then((result) => {
       console.log(result)
-      const {slack_username} = result.slack_username;
+      const slack_username = result.slack_username;
         console.log("after findByName", slack_username)
         slack_username
         ? addEvent({ ...event, slack_username }) // if user is found in database, run this code to add the event
