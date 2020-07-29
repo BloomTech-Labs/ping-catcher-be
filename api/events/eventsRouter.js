@@ -44,15 +44,16 @@ router.get("/", (req, res) => {
 
   router.post("/", challenge, (req, res) => {
     let { event } = req.body;
-    SlackUser.findByName({ slack_username: event.user }).then(({slack_username: result}) => {
-      const {slack_username} = result;
+    SlackUser.findByName({ slack_username: event.user }).then((result) => {
+      console.log(result)
+      const {slack_username} = result.slack_username;
         console.log("after findByName", slack_username)
         slack_username
         ? addEvent({ ...event, slack_username }) // if user is found in database, run this code to add the event
         : Users.add({
             slack_user: event.api_app_id,
             username: event.team_id,
-            password: event.token,
+            password: event.token
           })  // If user is not found in the database, this code will add the user to the users table in the database
             .then(user_id => {
               SlackUser.add({ slack_username, user_id }) // this code will then add the user to the slack user table 
