@@ -144,10 +144,7 @@ router.get("/", (req, res) => {
           .then((userResult) => {
             console.log("Inside of users find by name", userResult);
             userResult && userResult.id; // If user already exists, add a slack user where slack_username = event.user and user_id = the id of the existing user
-            SlackUser.add({
-              newUser: { slack_username: event.user, user_id: userResult.id },
-              res,
-            })
+            SlackUser.add({slack_username: event.user, user_id: userResult.id})
               .then((slackUserResponse) => {
                 console.log(slackUserResponse);
                 addEvent({ event: { ...event, slack_user: event.user }, res });
