@@ -18,7 +18,7 @@ function find() {
 
 function findByName({slack_username}) {
     console.log("slack user = ", slack_username)
-     return db('slack_user').where({slack_username}).first();
+     return db('slack_user').where({slack_username}).first().returning('*');
 }
 
 function findById({id}) {

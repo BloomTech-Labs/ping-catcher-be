@@ -53,49 +53,79 @@ router.get("/", (req, res) => {
   }
 
   router.post("/", challenge, (req, res) => {
-    let { event } = req.body;
+    let { api_app_id, event } = req.body;
     console.log(req.body);
-    SlackUser.findByName({ slack_username: event.user }) // search database for an existing slack user 
+    SlackUser.findByName({ slack_username: event.user }) // search database for an existing slack user
       .then((result) => {
         console.log(result);
-        addEvent({ event: { ...event, slack_user: event.user }, res }); // if slack user is found in database, run this code to add the event
-      })
-      .catch((err) => { // if slack user is not found in database, it will return undefined and go to this catch statement
-        let {api_app_id, event} = req.body; // destructure the api_app_id and the event from the req.body to pass in as new records
-        Users.findByName({ slack_user: api_app_id }) // search for an existing user in the database that matches the api_app_id
-          .then((userResult) => {
-            console.log("Inside of users find by name", userResult);
-            // If user already exists, add a slack user where slack_username = event.user and user_id = the id of the existing user
-            addSlackUser({ newUser: { slack_username: event.user, user_id: userResult.id }, res })
-              .then(slackUserResponse => {
-                console.log(slackUserResponse)
-                addEvent({ event: { ...event, slack_user: event.user }, res })
-              })
-              .catch(err => {
-                res.status(500).json({message: "Line 75 Problem adding event to db", err})
-              })
-          })
-          .catch((err) => { // If user does not exist in the database it will return undefined and go to this catch statement
-            Users.add({ // Add a new user with the values pulled from the req.body
-              slack_user: req.body.api_app_id,
-              username: req.body.team_id,
-              password: req.body.token,
-            }) // If user is not found in the database, this code will add the user to the users table in the database
-              .then((user_id) => {
-                console.log("after user if", user_id);
-                SlackUser.add({ slack_username: event.user, user_id }) // this code will then add a new slack user to the database pointing to the new user
-                  .then((slackUserResponse) => {
-                    console.log(slackUserResponse)
-                    addEvent({ event: { ...event, slack_user: event.user }, res }); // this will then add the event to the events table pointing to the new slack user
-                  })
-                  .catch((err) => {
-                    res.status(500).json({message: "Could not add slack user to the database", err});
-                  });
+        result.slack_username === event.user
+          ? addEvent({ event: { ...event, slack_user: event.user }, res }) // if slack user is found in database, run this code to add the event
+          : Users.findByName({ slack_user: api_app_id }) // search for an existing user in the database that matches the api_app_id
+              .then((userResult) => {
+                console.log("Inside of users find by name", userResult);
+                userResult && userResult.id
+                  ? addSlackUser({
+                      // If user already exists, add a slack user where slack_username = event.user and user_id = the id of the existing user
+                      newUser: {
+                        slack_username: event.user,
+                        user_id: userResult.id,
+                      },
+                      res,
+                    })
+                      .then((slackUserResponse) => {
+                        console.log(slackUserResponse);
+                        addEvent({
+                          event: { ...event, slack_user: event.user },
+                          res,
+                        });
+                      })
+                      .catch((err) => {
+                        res.status(500).json({
+                          message: "Line 84 Problem adding event to db",
+                          err,
+                        });
+                      })
+                  : Users.add({
+                      // Add a new user with the values pulled from the req.body
+                      slack_user: req.body.api_app_id,
+                      username: req.body.team_id,
+                      password: req.body.token,
+                    }) // If user is not found in the database, this code will add the user to the users table in the database
+                      .then((user_id) => {
+                        console.log("after user if", user_id);
+                        SlackUser.add({ slack_username: event.user, user_id }) // this code will then add a new slack user to the database pointing to the new user
+                          .then((slackUserResponse) => {
+                            console.log(slackUserResponse);
+                            addEvent({
+                              event: { ...event, slack_user: event.user },
+                              res,
+                            }); // this will then add the event to the events table pointing to the new slack user
+                          })
+                          .catch((err) => {
+                            res.status(500).json({
+                              message:
+                                "Could not add slack user to the database",
+                              err,
+                            });
+                          });
+                      })
+                      .catch((err) => {
+                        res
+                          .status(500)
+                          .json({
+                            message: "Could not add user to database",
+                            err,
+                          });
+                      });
               })
               .catch((err) => {
-                res.status(500).json({ message: "Could not add user to database", err });
+                // If user does not exist in the database it will return undefined and go to this catch statement
+                res.status(500).json({ message: "line 123", err });
               });
-          });
+      })
+      .catch((err) => {
+        // if slack user is not found in database, it will return undefined and go to this catch statement
+        res.status(500).json({ message: "line 128", err });
       });
   });
 
