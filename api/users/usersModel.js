@@ -10,8 +10,9 @@ function add({slack_user, username, password}) {
   return db("users").insert({slack_user, username, password }).returning('id');
 }
 
-function findByName(username) {
-  return db("users").where({ username }).first();
+function findByName({slack_user}) {
+  console.log("user = ", slack_user)
+  return db("users").where({ slack_user }).first();
 }
 
 function find() {
