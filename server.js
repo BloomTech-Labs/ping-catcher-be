@@ -7,6 +7,7 @@ const eventRouter = require("./api/events/eventsRouter");
 const usersRouter = require("./api/users/usersRouter");
 const rankingsRouter = require("./api/rankings/rankingRouter");
 const slackUserRouter = require("./api/slackUsers/slackUserRouter");
+const threadRankingRouter = require("./api/rankings/threadRankingRouter");
 
 const server = express();
 server.use(cors());
@@ -22,9 +23,10 @@ server.use("/event", eventRouter);
 server.use("/users", usersRouter);
 server.use("/rankings", rankingsRouter);
 server.use("/slackuser", slackUserRouter);
+server.use("/selectEvent", threadRankingRouter);
 
 server.get("/", (req, res) => {
-  res.send("<h2>Back end is working</h2>");
+  res.send("<h2>Ping Catcher back end</h2>");
 });
 
 module.exports = server;
