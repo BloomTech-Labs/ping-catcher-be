@@ -16,5 +16,5 @@ function add(nickname) {
 
 function findByText(text) {
   console.log("Inside thread ranking model find by text", text)
-  return db('events').where({ text })
+  return db('events').where('text', 'like', `%${text}%`)
 }

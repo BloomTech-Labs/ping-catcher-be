@@ -6,7 +6,6 @@ const request = require('request');
 
 const challenge = require("../middleware/challenge-middleware");
 
-
 const router = express.Router();
 
 router.get("/", (req, res) => {
