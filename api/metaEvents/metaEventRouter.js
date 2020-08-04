@@ -6,10 +6,10 @@ const ThreadRanking = require('../rankings/threadRankingModel');
 const router = express.Router();
 
 router.post("/newSubscription", (req, res) => {
-  const { id, nickname } = req.body; // Check what values are needed from the req.body
+  // const { id, nickname } = req.body; // Check what values are needed from the req.body
   console.log(req.body);
-  const stringObject = JSON.stringify(sub);
-  console.log("Destructured, stringified object", stringObject);
+  // const stringObject = JSON.stringify(sub);
+  // console.log("Destructured, stringified object", stringObject);
 
   Ranking.findById(id).then((rankResponse) => {
     console.log("ranking find by id", rankResponse);
