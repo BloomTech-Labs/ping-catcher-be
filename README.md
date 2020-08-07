@@ -1,61 +1,41 @@
-🚫 Note: All lines that start with 🚫 are instructions and should be deleted before this is posted to your portfolio. This is intended to be a guideline. Feel free to add your own flare to it.
-
-🚫 The numbers 1️⃣ through 3️⃣ next to each item represent the week that part of the docs needs to be comepleted by.  Make sure to delete the numbers by the end of Labs.
-
-🚫 Each student has a required minimum number of meaningful PRs each week per the rubric.  Contributing to docs does NOT count as a PR to meet your weekly requirements.
-
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+<a href="https://codeclimate.com/github/Lambda-School-Labs/ping-catcher-be/maintainability"><img src="https://api.codeclimate.com/v1/badges/07e5684b9844216b3c4e/maintainability" /></a>
+<a href="https://codeclimate.com/github/Lambda-School-Labs/ping-catcher-be/test_coverage"><img src="https://api.codeclimate.com/v1/badges/07e5684b9844216b3c4e/test_coverage" /></a>
 
-## 1️⃣ Getting started
+Backend delpoyed at [Heroku](https://ping-catcher-be.herokuapp.com/) <br>
+
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
-- **yarn install** to install all required dependencies
-- **yarn server** to start the local server
-- **yarn test** to start server using testing environment
+- **npm install** to install all required dependencies
+- **npm start** to start the local server
+- **npm test** to start server using testing environment
 
-### Backend framework goes here
+### Node.JS
 
-🚫 Why did you choose this framework?
+-    We went with Node for it speed and scalability. It also also easy to switch between working on the front-end and the back-end due both running with Javascript
 
--    Point One
--    Point Two
--    Point Three
--    Point Four
 
-## 2️⃣ Endpoints
-
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
-
-#### Organization Routes
+## Endpoints
 
 | Method | Endpoint                | Access Control | Description                                  |
 | ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| GET    | `/event`                | authed users   | Returns all events in the events table       |
+| GET    | `/id/:slack_user`       | authed users   | Return info for the specific user            |
+| POST   | `/event`                | authed users   | Add a new event to the database              |
 
-#### User Routes
+| GET    | `/selectEvent/:text`     | authed users        | Return all events that match text passed in    |
+| POST   | `/meta/newSubscription`  | authed users        | Adds a new subscription for the user           |
+| POST   | `/slackuser/newSlackUser`| authed users        | Adds a new slack user to database              |
+| POST   | `/users/newUser`         | user                | Adds a new user to database                    |
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
 
 # Data Model
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
+#### Users
 
 ---
 
@@ -63,73 +43,84 @@ To get the server running locally:
 {
   id: UUID
   name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
+  slack_user: STRING
+  username: STRING
+  password: STRING
+  }
 ```
 
-#### USERS
+#### SLACK USERS
 
 ---
 
 ```
 {
   id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
-  email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  slack_username: STRING
+  user_id: INTEGER
 }
 ```
 
-## 2️⃣ Actions
+### EVENTS
 
-🚫 This is an example, replace this with the actions that pertain to your backend
+---
 
-`getOrgs()` -> Returns all organizations
+```
+{
+  id: UUID
+  type: STRING
+  text: STRING
+  slack_user: STRING
+  team: STRING
+  channel: STRING
+  timestamp: STRING
+  event_timestamp: STRING
+}
+```
 
-`getOrg(orgId)` -> Returns a single organization by ID
+### META EVENTS
 
-`addOrg(org)` -> Returns the created org
+---
 
-`updateOrg(orgId)` -> Update an organization by ID
+```
+{
+  id: UUID
+  text_includes: STRING
+  event_type: STRING
+  from_user: STRING
+  from_team: STRING
+  from_channel: STRING
+  end_time: STRING
+  stringObject: STRING
+}
+```
 
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
+### RANKINGS
 
-`getUser(userId)` -> Returns a single user by user ID
+---
 
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
+```
+{
+  id: UUID
+  user_id: integer
+}
+```
 
-`updateUser(userId, changes object)` -> Updates a single user by ID.
+### THREAD RANKINGS
 
-`deleteUser(userId)` -> deletes everything dependent on the user
+---
 
-## 3️⃣ Environment Variables
+```
+{
+  id: UUID
+  rankings_id: integer
+  slack_user: STRING
+  event_id: integer
+  last_accessed: STRING
+  nickname: STRING
+}
+```
 
-In order for the app to function correctly, the user must set up their own environment variables.
-
-create a .env file that includes the following:
-
-🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
-    
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -168,5 +159,4 @@ These contribution guidelines have been adapted from [this good-Contributing.md-
 
 ## Documentation
 
-See [Frontend Documentation](🚫link to your frontend readme here) for details on the fronend of our project.
-🚫 Add DS iOS and/or Andriod links here if applicable.
+See [Frontend Documentation](https://github.com/Lambda-School-Labs/ping-catcher-fe) for details on the fronend of our project.
