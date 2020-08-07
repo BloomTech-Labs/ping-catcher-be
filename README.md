@@ -1,5 +1,8 @@
 # API Documentation
 
+#### Code Climate
+Project under review and scored by [Code Climate](https://codeclimate.com/github/Lambda-School-Labs/ping-catcher-be)
+
 <a href="https://codeclimate.com/github/Lambda-School-Labs/ping-catcher-be/maintainability"><img src="https://api.codeclimate.com/v1/badges/07e5684b9844216b3c4e/maintainability" /></a>
 <a href="https://codeclimate.com/github/Lambda-School-Labs/ping-catcher-be/test_coverage"><img src="https://api.codeclimate.com/v1/badges/07e5684b9844216b3c4e/test_coverage" /></a>
 
