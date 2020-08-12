@@ -19,7 +19,7 @@ router.post("/newSubscription", (req, res) => {
     end_time,
   } = req.body;
   console.log(req.body);
-  const sub = {
+  const sub = { // Set variable to be be stringified
     nickname,
     text_inlcudes,
     event_type,
@@ -40,15 +40,15 @@ router.post("/newSubscription", (req, res) => {
   };
   res.set(headers);
 
-  SlackUser.findByName({ slack_username: slackUser }).then((userResponse) => {
-    Ranking.findById({ id: userResponse })
+  SlackUser.findByName({ slack_username: slackUser }).then((userResponse) => { // Search for existing slack user, if not found code doesn't run
+    Ranking.findById({ id: userResponse }) // Looks for an existing ranking, if not found, will jump to catch statement to add a ranking for the slack user
       .then((rankResponse) => {
         console.log(rankResponse);
         rankResponse;
-        MetaEvent.findByText(stringObject)
+        MetaEvent.findByText(stringObject) // If ranking exists, search for an existing meta event with same parameters
           .then((subResponse) => {
             console.log("meta event find by text", subResponse);
-            ThreadRanking.add({
+            ThreadRanking.add({ // If meta event already exists, add a thread ranking pointing to it for the current user
               event_id: subResponse,
               nickname,
               rankings_id: rankResponse,
@@ -56,10 +56,12 @@ router.post("/newSubscription", (req, res) => {
             });
             res.status(200).json(subResponse);
           })
-          .catch();
+          .catch(err => {
+            res.status(500).json({message: "Could not add thread ranking", err})
+          });
       })
       .catch((err) => {
-        Ranking.add(id)
+        Ranking.add({id: userResponse}) // Add a new ranking for the user
           .then((rankingId) => {
             console.log("ranking add", rankingId);
             MetaEvent.findByText(stringObject) // Check to see if the subscription already exists
@@ -81,7 +83,7 @@ router.post("/newSubscription", (req, res) => {
                     res.status(301).json(addSub);
                   })
                   .then(
-                    ThreadRanking.add({
+                    ThreadRanking.add({ // Add the thread ranking
                       event_id: addSub,
                       nickname,
                       rankings_id: rankingId,
