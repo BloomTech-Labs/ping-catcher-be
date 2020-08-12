@@ -8,7 +8,7 @@ sseHeaders = {
   "Content-Type": "text/event-stream",
   "Cache-Control": "no-cache",
   Connection: "keep-alive",
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": "https://www.ping-catcher.com/",
   "Access-Control-Allow-Headers":
     "Origin, X-Requested-With, Content-Type, Accept"
 };
