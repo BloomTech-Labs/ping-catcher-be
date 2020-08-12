@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/newSubscription", (req, res) => {
   const { slackUser, nickname } = req.body;
-  const headers = {"Access-Control-Allow-Origin": "*",
+  const headers = {"Access-Control-Allow-Origin": "https://www.ping-catcher.com/",
   "Access-Control-Allow-Headers":
     "Origin, X-Requested-With, Content-Type, Accept"}
     res.set(headers);
