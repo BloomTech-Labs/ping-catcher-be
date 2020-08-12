@@ -3,7 +3,7 @@ const Ranking = require('../rankings/rankingModel');
 const router = require('../metaEvents/metaEventRouter');
 const MetaEvent = require('../metaEvents/metaEventsModel');
 
-router = express.Router();
+const router = express.Router();
 sseHeaders = {
   "Content-Type": "text/event-stream",
   "Cache-Control": "no-cache",
