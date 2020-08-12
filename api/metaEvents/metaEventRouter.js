@@ -7,7 +7,11 @@ const router = express.Router();
 
 router.post("/newSubscription", (req, res) => {
   const { slackUser, nickname } = req.body;
-  return res.status(200);
+  const headers = {"Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers":
+    "Origin, X-Requested-With, Content-Type, Accept"}
+    res.set(headers);
+  return res.status(200).json({message: 'working'});
   console.log(req.body);
   // const stringObject = JSON.stringify(sub);
   // console.log("Destructured, stringified object", stringObject);
