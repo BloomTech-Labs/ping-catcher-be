@@ -4,6 +4,7 @@ exports.up = function (knex) {
 
     tbl.string('slack_username', 255).notNullable().unique();
     tbl.integer('user_id').references("users.id").unsigned().onDelete("CASCADE");
+    tbl.integer('ranking_id').references("rankings.id").unsigned().onDelete("CASCADE");
   });
 };
 

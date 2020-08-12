@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post("/newSubscription", (req, res) => {
   const { slackUser, nickname } = req.body;
+  return res.status(200);
   console.log(req.body);
   // const stringObject = JSON.stringify(sub);
   // console.log("Destructured, stringified object", stringObject);
