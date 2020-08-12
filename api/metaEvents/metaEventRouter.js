@@ -6,7 +6,7 @@ const ThreadRanking = require('../rankings/threadRankingModel');
 const router = express.Router();
 
 router.post("/newSubscription", (req, res) => {
-  // const { id, nickname } = req.body; // Check what values are needed from the req.body
+  const { slackUser, nickname } = req.body;
   console.log(req.body);
   // const stringObject = JSON.stringify(sub);
   // console.log("Destructured, stringified object", stringObject);
@@ -44,7 +44,7 @@ router.post("/newSubscription", (req, res) => {
               .json({ message: "Could not add thread ranking", err });
           })
           .catch((err) => {
-            res.status(500).json({ message: "Cannot add to database", err });
+            res.status(200).json({ message: "Cannot add to database", err });
           });
       })
       .catch((err) => {
@@ -81,7 +81,7 @@ router.post("/newSubscription", (req, res) => {
                 })
                 .catch((err) => {
                   res
-                    .status(500)
+                    .status(200)
                     .json({ message: "Cannot add to database", err });
                 });
             });
