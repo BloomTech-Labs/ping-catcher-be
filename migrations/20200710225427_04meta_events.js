@@ -18,4 +18,8 @@ exports.down = function(knex) {
   return
   // return new Promise((req, res)=> console.log('not dropping meta_events yet'))
   // return knex.schema.dropTableIfExists('meta_events')
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> fb2b01f30c144e26a6ce2c59d75ba7c69ddf4fb7
