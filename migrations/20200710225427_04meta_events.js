@@ -15,5 +15,7 @@ exports.up = function(knex) {
 };
 
 exports.down = function(knex) {
-
+  return
+  // return new Promise((req, res)=> console.log('not dropping meta_events yet'))
+  // return knex.schema.dropTableIfExists('meta_events')
 };

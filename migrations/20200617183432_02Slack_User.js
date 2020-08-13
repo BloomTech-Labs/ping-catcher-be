@@ -10,8 +10,7 @@ exports.up = function (knex) {
 
 exports.down = function (knex) {
     return knex.schema
-      .dropTableIfExists('slack_user')
-      .dropTableIfExists('meta_events')
+      // .dropTableIfExists('slack_user')
       .dropTableIfExists('thread_ranking')
-      .dropTableIfExists('rankings')
+      // .dropTableIfExists('rankings')
 };
