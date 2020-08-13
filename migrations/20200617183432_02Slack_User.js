@@ -13,8 +13,4 @@ exports.down = function (knex) {
       // .dropTableIfExists('slack_user')
       .dropTableIfExists('thread_ranking')
       // .dropTableIfExists('rankings')
-<<<<<<< HEAD
 };
-=======
-};
->>>>>>> fb2b01f30c144e26a6ce2c59d75ba7c69ddf4fb7
