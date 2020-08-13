@@ -9,12 +9,8 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-    return knex.schema
-      // .dropTableIfExists('slack_user')
-      .dropTableIfExists('thread_ranking')
-      // .dropTableIfExists('rankings')
-<<<<<<< HEAD
+  return knex.schema
+    // .dropTableIfExists('slack_user')
+    .dropTableIfExists('thread_ranking')
+    // .dropTableIfExists('rankings')
 };
-=======
-};
->>>>>>> fb2b01f30c144e26a6ce2c59d75ba7c69ddf4fb7
