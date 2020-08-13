@@ -8,5 +8,9 @@ exports.up = function (knex) {
 };
 
 exports.down = function (knex) {
-  return knex.schema.dropTableIfExists("users");
+  return knex.schema
+  .dropTableIfExists('meta_events')
+  .dropTableIfExists('slack_user')
+  .dropTableIfExists('rankings')
+  .dropTableIfExists("users");
 };
