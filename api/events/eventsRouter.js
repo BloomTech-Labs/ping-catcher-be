@@ -69,10 +69,7 @@ router.get("/", (req, res) => {
                 addEvent({ event: { ...event, slack_user: event.user }, res });
               })
               .catch((err) => {
-                res.status(500).json({
-                  message: "Line 157 Problem adding event to db",
-                  err,
-                });
+                console.log('error adding slack user', err)
               });
           })
           .catch((err) => {
