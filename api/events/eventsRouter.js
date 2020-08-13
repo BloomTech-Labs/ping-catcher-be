@@ -59,11 +59,11 @@ router.get("/", (req, res) => {
         result.slack_username === event.user;
         addEvent({ event: { ...event, slack_user: event.user }, res }); // if slack user is found in database, run this code to add the event
       })
-      .catch((err) => {
+      .catch((err) => { // If slackUser returns undefined, it will go to this catch method
         Users.findByName({ slack_user: api_app_id }) // search for an existing user in the database that matches the api_app_id
           .then((userResult) => {
             console.log("Inside of users find by name", userResult);
-            SlackUser.add({slack_username: event.user, user_id: userResult.id, ranking_id: null})
+            SlackUser.add({slack_username: event.user, user_id: userResult.id, ranking_id: null}) 
               .then((slackUserResponse) => {
                 console.log(slackUserResponse);
                 addEvent({ event: { ...event, slack_user: event.user }, res });
@@ -106,10 +106,6 @@ router.get("/", (req, res) => {
               });
           });
       })
-      .catch((err) => {
-        // if slack user is not found in database, it will return undefined and go to this catch statement
-        res.status(500).json({ message: "line 197", err });
-      });
   });
 
 router.post('/verifyUser', (req, res) => {
