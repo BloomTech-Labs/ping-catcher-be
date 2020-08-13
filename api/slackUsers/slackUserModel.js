@@ -7,8 +7,8 @@ module.exports = {
     findById
 }
 
-function add({slack_username, user_id}) {
-    return db('slack_user').insert({slack_username, user_id}).returning('slack_username').first();
+function add({slack_username, user_id, ranking_id}) {
+    return db('slack_user').insert({slack_username, user_id, ranking_id}).returning('slack_username').first();
 }
 
 function find() {

@@ -1,8 +1,7 @@
 const express = require("express");
 const Events = require("./eventsModel.js");
-const SlackUser = require('../slackUsers/slackUserModel.js');
+const SlackUser = require('../slackUsers/slackUserModel');
 const Users = require('../users/usersModel');
-const request = require('request');
 
 const challenge = require("../middleware/challenge-middleware");
 
