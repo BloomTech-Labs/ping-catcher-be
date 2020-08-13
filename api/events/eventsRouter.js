@@ -65,7 +65,7 @@ router.get("/", (req, res) => {
           .then((userResult) => {
             console.log("Inside of users find by name", userResult);
             userResult && userResult.id; // If user already exists, add a slack user where slack_username = event.user and user_id = the id of the existing user
-            SlackUser.add({slack_username: event.user, user_id: userResult.id})
+            SlackUser.add({slack_username: event.user, user_id: userResult.id, ranking_id: null})
               .then((slackUserResponse) => {
                 console.log(slackUserResponse);
                 addEvent({ event: { ...event, slack_user: event.user }, res });
@@ -87,7 +87,7 @@ router.get("/", (req, res) => {
             }) // If user is not found in the database, this code will add the user to the users table in the database
               .then((user_id) => {
                 console.log("after user if", user_id);
-                SlackUser.add({ slack_username: event.user, user_id }) // this code will then add a new slack user to the database pointing to the new user
+                SlackUser.add({ slack_username: event.user, user_id, ranking_id: null }) // this code will then add a new slack user to the database pointing to the new user
                   .then((slackUserResponse) => {
                     console.log("slack user response", slackUserResponse);
                     console.log("right before event", event.user);
