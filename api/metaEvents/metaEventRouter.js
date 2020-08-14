@@ -41,10 +41,10 @@ router.post("/newSubscription", (req, res) => {
   res.set(headers);
 
   SlackUser.findByName({ slack_username: slackUser }).then((userResponse) => { // Search for existing slack user, if not found code doesn't run
-    Ranking.findById({ id: userResponse }) // Looks for an existing ranking, if not found, will jump to catch statement to add a ranking for the slack user
+  console.log(userResponse)
+    Ranking.findById({ id: userResponse.ranking_id }) // Looks for an existing ranking, if not found, will jump to catch statement to add a ranking for the slack user
       .then((rankResponse) => {
         console.log(rankResponse);
-        rankResponse;
         MetaEvent.findByText(stringObject) // If ranking exists, search for an existing meta event with same parameters
           .then((subResponse) => {
             console.log("meta event find by text", subResponse);
@@ -57,11 +57,28 @@ router.post("/newSubscription", (req, res) => {
             res.status(200).json(subResponse);
           })
           .catch(err => {
-            res.status(500).json({message: "Could not add thread ranking", err})
+            MetaEvent.add(stringObject)
+              .then(addSub => {
+                console.log("adding meta event", addSub);
+              })
+                .then(
+                  ThreadRanking.add({
+                    event_id: subResponse,
+                    nickname,
+                    rankings_id: rankResponse,
+                    slack_user: slackUser,
+                  })
+                )
+                .catch(err => {
+                  console.log("Could not add thread ranking", err)
+                })
+              .catch(err => {
+                console.log("Could not add meta event", err)
+              })
           });
       })
       .catch((err) => {
-        Ranking.add({id: userResponse}) // Add a new ranking for the user
+        Ranking.add({id: userResponse.ranking_id}) // Add a new ranking for the user
           .then((rankingId) => {
             console.log("ranking add", rankingId);
             MetaEvent.findByText(stringObject) // Check to see if the subscription already exists
