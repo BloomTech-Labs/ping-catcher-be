@@ -61,18 +61,13 @@ router.post("/newSubscription", (req, res) => {
             MetaEvent.add(stringObject)
               .then(addSub => {
                 console.log("adding meta event", addSub);
-              })
-                .then(
-                  ThreadRanking.add({
-                    event_id: addSub,
-                    nickname,
-                    rankings_id: rankResponse,
-                    slack_user: slackUser,
-                  })
-                )
-                .catch(err => {
-                  console.log("Could not add thread ranking", err)
+                ThreadRanking.add({
+                  event_id: addSub,
+                  nickname,
+                  rankings_id: rankResponse,
+                  slack_user: slackUser,
                 })
+              })
               .catch(err => {
                 console.log("Could not add meta event", err)
               })
