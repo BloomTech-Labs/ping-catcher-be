@@ -3,6 +3,7 @@ const MetaEvent = require("./metaEventsModel")
 const Ranking = require('../rankings/rankingModel');
 const ThreadRanking = require('../rankings/threadRankingModel');
 const SlackUser = require('../slackUsers/slackUserModel');
+const UsersModel = require("../users/usersModel");
 
 const router = express.Router();
 
@@ -49,7 +50,7 @@ router.post("/newSubscription", (req, res) => {
           .then((subResponse) => {
             console.log("meta event find by text", subResponse);
             ThreadRanking.add({ // If meta event already exists, add a thread ranking pointing to it for the current user
-              event_id: subResponse,
+              event_id: subResponse.id,
               nickname,
               rankings_id: rankResponse,
               slack_user: slackUser,
@@ -63,7 +64,7 @@ router.post("/newSubscription", (req, res) => {
               })
                 .then(
                   ThreadRanking.add({
-                    event_id: subResponse,
+                    event_id: subResponse.id,
                     nickname,
                     rankings_id: rankResponse,
                     slack_user: slackUser,
@@ -78,7 +79,8 @@ router.post("/newSubscription", (req, res) => {
           });
       })
       .catch((err) => {
-        Ranking.add({id: userResponse.ranking_id}) // Add a new ranking for the user
+        UsersModel.find
+        Ranking.add({user_id: userResponse.ranking_id}) // Add a new ranking for the user
           .then((rankingId) => {
             console.log("ranking add", rankingId);
             MetaEvent.findByText(stringObject) // Check to see if the subscription already exists
