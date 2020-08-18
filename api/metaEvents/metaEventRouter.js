@@ -64,7 +64,7 @@ router.post("/newSubscription", (req, res) => {
               })
                 .then(
                   ThreadRanking.add({
-                    event_id: subResponse.id,
+                    event_id: addSub,
                     nickname,
                     rankings_id: rankResponse,
                     slack_user: slackUser,
