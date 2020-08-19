@@ -10,6 +10,7 @@ function findByText(stringObject) {
   return db('meta_events').where(stringObject).first();
 }
 
-function add(stringObject) {
-  return db('meta_events').where(stringObject).returning('id');
+function add({event_key}) {
+  const meta_event = JSON.parse(event_key)
+  return db('meta_events').insert({...meta_event, event_key}).returning('id');
 }
