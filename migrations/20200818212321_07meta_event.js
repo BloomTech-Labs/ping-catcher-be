@@ -1,6 +1,6 @@
 
 exports.up = function(knex) {
-  return knex.schema.alterTable('meta_event', tbl => {
+  return knex.schema.alterTable('meta_events', tbl => {
     tbl.string('event_key')
   });
 };
