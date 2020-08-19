@@ -4,7 +4,8 @@ module.exports = {
     add, 
     find,
     findByName,
-    findById
+    findById,
+    update
 }
 
 function add({slack_username, user_id, ranking_id}) {
@@ -23,4 +24,9 @@ function findByName({slack_username}) {
 function findById({id}) {
     console.log("id = ", id)
     return db.from('slack_user').where({id}).first();
+}
+
+function update({id, update}) {
+    console.log('update function', update)
+    return db('slack_user').where({id}).update({...update}).returning('id')
 }
