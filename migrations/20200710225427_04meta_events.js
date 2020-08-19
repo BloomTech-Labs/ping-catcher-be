@@ -11,6 +11,7 @@ exports.up = function(knex) {
     tbl.string("start_time", 255)
     tbl.string("end_time", 255)
     tbl.string("stringObject", 510).unique().notNullable()
+    tbl.string("event_key").unique();
   })
 };
 
