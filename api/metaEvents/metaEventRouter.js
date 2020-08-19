@@ -7,7 +7,7 @@ const UsersModel = require("../users/usersModel");
 
 const router = express.Router();
 
-const addMetaEvent = ({res, rankResponse, slackUser, event_key}) => {
+const addMetaEvent = ({res, rankResponse, slackUser, event_key, nickname}) => {
   console.log(rankResponse);
   MetaEvent.findByText({event_key}) // If ranking exists, search for an existing meta event with same parameters
     .then((subResponse) => {
