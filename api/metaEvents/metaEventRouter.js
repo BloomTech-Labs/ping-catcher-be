@@ -9,7 +9,7 @@ const router = express.Router();
 
 const addMetaEvent = ({res, rankResponse, slackUser, event_key}) => {
   console.log(rankResponse);
-  MetaEvent.findByText(event_key) // If ranking exists, search for an existing meta event with same parameters
+  MetaEvent.findByText({event_key}) // If ranking exists, search for an existing meta event with same parameters
     .then((subResponse) => {
       console.log("meta event find by text", subResponse);
       ThreadRanking.add({ // If meta event already exists, add a thread ranking pointing to it for the current user
@@ -21,7 +21,7 @@ const addMetaEvent = ({res, rankResponse, slackUser, event_key}) => {
       res.status(200).json(subResponse);
     })
     .catch(err => {
-      MetaEvent.add(event_key)
+      MetaEvent.add({event_key})
         .then(addSub => {
           console.log("adding meta event", addSub);
           ThreadRanking.add({
