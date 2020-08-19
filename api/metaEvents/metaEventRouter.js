@@ -7,9 +7,9 @@ const UsersModel = require("../users/usersModel");
 
 const router = express.Router();
 
-const addMetaEvent = ({res, rankResponse, slackUser, stringObject}) => {
+const addMetaEvent = ({res, rankResponse, slackUser, event_key}) => {
   console.log(rankResponse);
-  MetaEvent.findByText(stringObject) // If ranking exists, search for an existing meta event with same parameters
+  MetaEvent.findByText(event_key) // If ranking exists, search for an existing meta event with same parameters
     .then((subResponse) => {
       console.log("meta event find by text", subResponse);
       ThreadRanking.add({ // If meta event already exists, add a thread ranking pointing to it for the current user
@@ -21,7 +21,7 @@ const addMetaEvent = ({res, rankResponse, slackUser, stringObject}) => {
       res.status(200).json(subResponse);
     })
     .catch(err => {
-      MetaEvent.add(stringObject)
+      MetaEvent.add(event_key)
         .then(addSub => {
           console.log("adding meta event", addSub);
           ThreadRanking.add({
@@ -61,8 +61,8 @@ router.post("/newSubscription", (req, res) => {
     end_time,
   };
 
-  const stringObject = JSON.stringify(sub);
-  console.log("Stringified object", stringObject);
+  const event_key = JSON.stringify(sub);
+  console.log("Stringified object", event_key);
 
   const headers = {
     "Access-Control-Allow-Origin": "*",
@@ -81,17 +81,17 @@ router.post("/newSubscription", (req, res) => {
           Ranking.add({user_id: userResponse.user_id})
           .then(rankingId => {
             SlackUser.update({ranking_id: rankingId})
-            addMetaEvent({res, rankResponse, slackUser, stringObject})
+            addMetaEvent({res, rankResponse, slackUser, event_key})
           })
         } else {
-          addMetaEvent({res, rankResponse, slackUser, stringObject});
+          addMetaEvent({res, rankResponse, slackUser, event_key});
         }
       })
       .catch((err) => {
         UsersModel.find
         Ranking.add({user_id: userResponse.ranking_id}) // Add a new ranking for the user
           .then((rankingId) => {
-                addMetaEvent({res, rankResponse, slackUser, stringObject})
+                addMetaEvent({res, rankResponse, slackUser, event_key})
           })
           .catch((err) => {
             res.status(404).json({ message: "Slack user not found" });
