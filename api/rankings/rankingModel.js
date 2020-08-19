@@ -11,7 +11,11 @@ function find() {
 }
 
 function findById({id}) {
-  return db('rankings').where({id});
+  const ranking = db('rankings').where({id});
+  if(ranking){
+    return ranking
+  } 
+  return -1;
 }
 
 function add(user_id) {
