@@ -24,6 +24,7 @@ const addMetaEvent = ({
         nickname,
         rankings_id: rankResponse,
         slack_user: slackUser,
+        last_accessed: null
       });
       res.status(200).json(subResponse);
     })
@@ -36,6 +37,7 @@ const addMetaEvent = ({
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
+            last_accessed: null
           });
         })
         .catch((err) => {
