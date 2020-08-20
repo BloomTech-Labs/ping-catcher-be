@@ -12,6 +12,7 @@ function find() {
 
 function findById({id}) {
   const ranking = db('rankings').where({id});
+  console.log("ranking in find by id", ranking)
   if(ranking){
     return ranking
   } 

@@ -10,8 +10,8 @@ function find(rankings_id) {
   return db('thread_ranking').where({rankings_id})
 }
 
-function add(nickname) {
-  return db('rankings').insert({nickname})
+function add({event_id, nickname, rankings_id, slack_user}) {
+  return db('rankings').insert({event_id, nickname, rankings_id, slack_user})
 }
 
 function findByText(text) {
