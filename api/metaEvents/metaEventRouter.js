@@ -85,7 +85,9 @@ router.post("/newSubscription", (req, res) => {
     .then((userResponse) => {
       // Search for existing slack user, if not found code doesn't run
       console.log(userResponse); // Looks for an existing ranking, if not found, will jump to catch statement to add a ranking for the slack user
-      return [ Ranking.findById({ id: userResponse.ranking_id }), userResponse ];
+      const rankResponse = Ranking.findById({id: userResponse.ranking_id})
+      return [rankResponse, userResponse]
+      // return [ Ranking.findById({ id: userResponse.ranking_id }), userResponse ];
     })
     .then((rankResponseArr) => {
       const [rankResponse, userResponse] = rankResponseArr;
