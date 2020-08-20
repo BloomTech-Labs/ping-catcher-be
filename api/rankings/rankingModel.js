@@ -10,8 +10,8 @@ function find() {
   return db("rankings");
 }
 
-function findById({id}) {
-  const ranking = db('rankings').where({id}).first();
+async function findById({id}) {
+  const ranking = await db('rankings').where({id}).first();
   console.log("ranking in find by id", ranking)
   if(ranking === undefined){
     return -1
