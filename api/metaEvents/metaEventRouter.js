@@ -92,7 +92,7 @@ router.post("/newSubscription", (req, res) => {
       if (rankResponse === -1) {
         const ranking_id = Ranking.add({ user_id: userResponse.user_id });
         SlackUser.update({ ranking_id });
-        addMetaEvent({ res, rankResponse: ranking_id, slackUser, event_key });
+        addMetaEvent({ res, slackUser, event_key });
       } else {
         addMetaEvent({ res, rankResponse, slackUser, event_key });
       }
