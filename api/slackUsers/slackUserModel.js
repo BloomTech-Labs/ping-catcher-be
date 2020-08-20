@@ -26,7 +26,7 @@ function findById({id}) {
     return db.from('slack_user').where({id}).first();
 }
 
-function update({id, update}) {
+function update({slack_username, update}) {
     console.log('update function', update)
-    return db('slack_user').where({id}).update({...update});
+    return db('slack_user').where({slack_username}).update({...update});
 }
