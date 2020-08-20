@@ -105,7 +105,7 @@ router.post("/newSubscription", (req, res) => {
         console.log(err)
       }
       try{
-        await SlackUser.update({ id: slackUser.id, update: {ranking_id: ranking_id[0]} })
+        await SlackUser.update({ slack_username: slackUser, update: {ranking_id: ranking_id[0]} })
       }
       catch(err){
         console.log(err)
