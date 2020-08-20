@@ -13,6 +13,5 @@ function findByText(event_key) {
 function add({event_key}) {
   console.log(event_key)
   const meta_event = JSON.parse(event_key)
-  console.log('meta event after parsing', meta_event)
   return db('meta_events').insert({...meta_event, event_key}).returning('id');
 }

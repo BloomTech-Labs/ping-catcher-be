@@ -88,6 +88,7 @@ router.post("/newSubscription", (req, res) => {
       return Ranking.findById({ id: userResponse.ranking_id });
     })
     .then((rankResponse) => {
+      console.log("rank response", rankResponse)
       if (rankResponse === -1) {
         const ranking_id = Ranking.add({ user_id: userResponse.user_id });
         SlackUser.update({ ranking_id });
