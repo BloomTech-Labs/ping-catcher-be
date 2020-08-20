@@ -85,16 +85,17 @@ router.post("/newSubscription", (req, res) => {
     .then((userResponse) => {
       // Search for existing slack user, if not found code doesn't run
       console.log(userResponse); // Looks for an existing ranking, if not found, will jump to catch statement to add a ranking for the slack user
-      return Ranking.findById({ id: userResponse.ranking_id });
+      return [ Ranking.findById({ id: userResponse.ranking_id }), userResponse ];
     })
-    .then((rankResponse) => {
+    .then((rankResponseArr) => {
+      const [rankResponse, userResponse] = rankResponseArr;
       console.log("rank response", rankResponse)
       if (rankResponse === -1) {
-        const ranking_id = Ranking.add({ user_id: userResponse.user_id });
-        SlackUser.update({ ranking_id });
-        addMetaEvent({ res, slackUser, event_key });
+        const ranking_id = Ranking.add({ user_id: userResponse.user_id }); // Start here.
+        SlackUser.update({ id: slackUser.id, update: {ranking_id} });
+        addMetaEvent({ res, slackUser: slackUser.slack_username, rankResponse: ranking_id, event_key });
       } else {
-        addMetaEvent({ res, rankResponse, slackUser, event_key });
+        addMetaEvent({ res, rankResponse, slackUser: slackUser.slack_username, event_key });
       }
     });
 });
