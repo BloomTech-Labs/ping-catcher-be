@@ -13,10 +13,10 @@ function find() {
 function findById({id}) {
   const ranking = db('rankings').where({id}).first();
   console.log("ranking in find by id", ranking)
-  if(ranking){
-    return ranking
+  if(ranking === undefined){
+    return -1
   } 
-  return -1;
+  return ranking;
 }
 
 function add(user_id) {
