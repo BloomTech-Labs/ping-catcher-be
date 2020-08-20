@@ -20,5 +20,5 @@ async function findById({id}) {
 }
 
 function add({user_id}) {
-  return db('rankings').insert({user_id}).returning('id').first();
+  return db('rankings').insert({user_id}).returning('id');
 }
