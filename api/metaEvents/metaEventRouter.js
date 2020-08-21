@@ -56,7 +56,7 @@ async function addMetaEvent({
     let addMeta 
     let addThread
     try{
-       metaResponse = await MetaEvent.findByText( event_key )
+       metaResponse = await MetaEvent.findByText({ event_key })
     }
     catch(err){
       console.log(err)
@@ -77,7 +77,7 @@ async function addMetaEvent({
         }
       } else {
         try{
-          addMeta = await MetaEvent.add( event_key )
+          addMeta = await MetaEvent.add({ event_key })
           addThread = await ThreadRanking.add({
             event_id: addMeta,
             nickname,
