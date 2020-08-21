@@ -21,9 +21,10 @@ router.get('/subscriptions/user/:slack_username', (req, res) => {
   async function getUser() {
   let slackResponse
   let rankResponse
+
   try{
     slackResponse = await SlackUser.findByName({slack_username})
-    rankResponse = await Rankings.findById({ranking_id: slackResponse.ranking_id})
+    rankResponse = await Rankings.findById({id: slackResponse.ranking_id})
     threadRank = await ThreadRank.findByRankId({ranking_id: rankResponse[0]})
     res.status(200).json(threadRank)
   }
