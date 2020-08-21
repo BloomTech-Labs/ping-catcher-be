@@ -68,7 +68,7 @@ async function addMetaEvent({
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
-            last_accessed: null
+            last_accessed: ''
           })
           res.status(201)
         }
@@ -83,7 +83,7 @@ async function addMetaEvent({
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
-            last_accessed: null
+            last_accessed: ''
         })
         res.status(201)
         }
