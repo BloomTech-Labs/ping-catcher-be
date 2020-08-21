@@ -76,7 +76,7 @@ async function addMetaEvent({
           addMeta = await MetaEvent.add({ event_key })
           console.log("add meta event", addMeta)
           addThread = await ThreadRanking.add({
-            event_id: addMeta,
+            event_id: addMeta[0],
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
