@@ -64,7 +64,7 @@ async function addMetaEvent({
       if(metaResponse){
         try{
           addThread = await threadRankingModel.add({
-            event_id: subResponse.id,
+            event_id: metaResponse.id,
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
@@ -79,7 +79,7 @@ async function addMetaEvent({
         try{
           addMeta = await MetaEvent.add({ event_key })
           addThread = await ThreadRanking.add({
-            event_id: subResponse.id,
+            event_id: addMeta,
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
