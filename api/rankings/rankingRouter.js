@@ -18,7 +18,7 @@ router.get("/", (req, res) => {
 
 router.get('/subscriptions/:slack_username', (req, res) => {
   const slack_username = req.params.slack_username;
-  
+  async function getUser() {
   let slackResponse
   let rankResponse
   try{
@@ -30,11 +30,14 @@ router.get('/subscriptions/:slack_username', (req, res) => {
   catch(err){
     console.log(err)
   }
+}
+getUser()
 })
 
 router.get('/subscriptions/:id', (req, res) => {
   const { id } = req.params;
 
+  async function getSubs() {
   let metaEvent
   try{
   metaEvent = await MetaEvent.findById({id})
@@ -43,6 +46,8 @@ router.get('/subscriptions/:id', (req, res) => {
   catch(err){
     console.log(err)
   }
+}
+getSubs()
 })
 
 module.exports = router;
