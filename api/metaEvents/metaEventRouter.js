@@ -7,44 +7,91 @@ const UsersModel = require("../users/usersModel");
 
 const router = express.Router();
 
-const addMetaEvent = ({
+// const addMetaEvent = ({
+//   res,
+//   rankResponse,
+//   slackUser,
+//   event_key,
+//   nickname,
+// }) => {
+//   console.log(rankResponse);
+//   MetaEvent.findByText({ event_key }) // If ranking exists, search for an existing meta event with same parameters
+//     .then((subResponse) => {
+//       console.log("meta event find by text", subResponse);
+//       ThreadRanking.add({
+//         // If meta event already exists, add a thread ranking pointing to it for the current user
+//         event_id: subResponse.id,
+//         nickname,
+//         rankings_id: rankResponse,
+//         slack_user: slackUser,
+//         last_accessed: null
+//       });
+//       res.status(200).json(subResponse);
+//     })
+//     .catch((err) => {
+//       MetaEvent.add({ event_key })
+//         .then((addSub) => {
+//           console.log("adding meta event", addSub);
+//           ThreadRanking.add({
+//             event_id: addSub,
+//             nickname,
+//             rankings_id: rankResponse,
+//             slack_user: slackUser,
+//             last_accessed: null
+//           });
+//         })
+//         .catch((err) => {
+//           console.log("Could not add meta event", err);
+//         });
+//     });
+// };
+
+async function addMetaEvent({
   res,
   rankResponse,
   slackUser,
   event_key,
-  nickname,
-}) => {
-  console.log(rankResponse);
-  MetaEvent.findByText({ event_key }) // If ranking exists, search for an existing meta event with same parameters
-    .then((subResponse) => {
-      console.log("meta event find by text", subResponse);
-      ThreadRanking.add({
-        // If meta event already exists, add a thread ranking pointing to it for the current user
-        event_id: subResponse.id,
-        nickname,
-        rankings_id: rankResponse,
-        slack_user: slackUser,
-        last_accessed: null
-      });
-      res.status(200).json(subResponse);
-    })
-    .catch((err) => {
-      MetaEvent.add({ event_key })
-        .then((addSub) => {
-          console.log("adding meta event", addSub);
-          ThreadRanking.add({
-            event_id: addSub,
+  nickname}) {
+    let metaResponse
+    let addMeta 
+    let addThread
+    try{
+       metaResponse = await MetaEvent.findByText({ event_key })
+    }
+    catch(err){
+      console.log(err)
+    }
+      if(metaResponse){
+        try{
+          addThread = await threadRankingModel.add({
+            event_id: subResponse.id,
             nickname,
             rankings_id: rankResponse,
             slack_user: slackUser,
             last_accessed: null
-          });
+          })
+          res.status(201)
+        }
+        catch(err){
+          console.log(err)
+        }
+      } else {
+        try{
+          addMeta = await MetaEvent.add({ event_key })
+          addThread = await ThreadRanking.add({
+            event_id: subResponse.id,
+            nickname,
+            rankings_id: rankResponse,
+            slack_user: slackUser,
+            last_accessed: null
         })
-        .catch((err) => {
-          console.log("Could not add meta event", err);
-        });
-    });
-};
+        res.status(201)
+        }
+        catch(err){
+          console.log(err)
+        }
+      }
+}
 
 router.post("/newSubscription", (req, res) => {
   const {
