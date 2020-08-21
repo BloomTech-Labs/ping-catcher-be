@@ -56,12 +56,8 @@ async function addMetaEvent({
     let addMeta 
     let addThread
     try{
-       metaResponse = await MetaEvent.findByText( event_key )
-    }
-    catch(err){
-      console.log(err)
-    }
-      if(metaResponse){
+       metaResponse = await MetaEvent.findByText({ event_key })
+       if(metaResponse){
         try{
           addThread = await threadRankingModel.add({
             event_id: metaResponse.id,
@@ -77,7 +73,8 @@ async function addMetaEvent({
         }
       } else {
         try{
-          addMeta = await MetaEvent.add( event_key )
+          addMeta = await MetaEvent.add({ event_key })
+
           addThread = await ThreadRanking.add({
             event_id: addMeta,
             nickname,
@@ -91,6 +88,10 @@ async function addMetaEvent({
           console.log(err)
         }
       }
+    }
+    catch(err){
+      console.log(err)
+    }
 }
 
 router.post("/newSubscription", (req, res) => {
