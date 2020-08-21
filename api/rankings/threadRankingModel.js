@@ -21,6 +21,6 @@ function findByText(text) {
   return db('events').where('text', 'like', `%${text}%`)
 }
 
-function findByRankId({ranking_id}) {
-  return db('thread_ranking').where({ranking_id});
+function findByRankId({rankings_id}) {
+  return db('thread_ranking').where({rankings_id});
 }
