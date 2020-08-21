@@ -55,13 +55,14 @@ async function addMetaEvent({
     let metaResponse
     let addMeta 
     let addThread
+    let name = JSON.parse(event_key).nickname;
     try{
        metaResponse = await MetaEvent.findByText({ event_key })
        if(metaResponse){
         try{
           addThread = await threadRankingModel.add({
             event_id: metaResponse.id,
-            nickname,
+            nickname: name,
             rankings_id: rankResponse,
             slack_user: slackUser,
             last_accessed: ''
@@ -77,7 +78,7 @@ async function addMetaEvent({
           console.log("add meta event", addMeta)
           addThread = await ThreadRanking.add({
             event_id: addMeta[0],
-            nickname,
+            nickname: name,
             rankings_id: rankResponse,
             slack_user: slackUser,
             last_accessed: ''
