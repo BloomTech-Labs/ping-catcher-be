@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
     });
 });
 
-router.get('/subscriptions/:slack_username', (req, res) => {
+router.get('/subscriptions/user/:slack_username', (req, res) => {
   const slack_username = req.params.slack_username;
   async function getUser() {
   let slackResponse
@@ -34,7 +34,7 @@ router.get('/subscriptions/:slack_username', (req, res) => {
 getUser()
 })
 
-router.get('/subscriptions/:id', (req, res) => {
+router.get('/subscriptions/id/:id', (req, res) => {
   const { id } = req.params;
 
   async function getSubs() {
