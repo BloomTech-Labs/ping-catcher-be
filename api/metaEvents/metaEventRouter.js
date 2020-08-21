@@ -74,7 +74,7 @@ async function addMetaEvent({
       } else {
         try{
           addMeta = await MetaEvent.add({ event_key })
-
+          console.log("add meta event", addMeta)
           addThread = await ThreadRanking.add({
             event_id: addMeta,
             nickname,
@@ -85,7 +85,7 @@ async function addMetaEvent({
         res.status(201)
         }
         catch(err){
-          console.log(err)
+          console.log("parse error?", err)
         }
       }
     }

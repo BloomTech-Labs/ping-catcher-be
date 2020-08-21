@@ -11,6 +11,7 @@ function find(rankings_id) {
 }
 
 function add({event_id, nickname, rankings_id, slack_user, last_accessed}) {
+  console.log("Event id", event_id)
   return db('thread_ranking').insert({event_id, nickname, rankings_id, slack_user, last_accessed})
 }
 
