@@ -29,10 +29,8 @@ To get the server running locally:
 | GET    | `/event`                | authed users   | Returns all events in the events table       |
 | GET    | `/id/:slack_user`       | authed users   | Return info for the specific user            |
 | POST   | `/event`                | authed users   | Add a new event to the database              |
-
 | GET | `/subscriptions/user/:slack_username`| authed users | Return id of the user who submitted new sub |
 | GET | `/subscriptions/id/:id`              | authed users | Return id of the user who submitted new sub |
-
 | GET    | `/selectEvent/:text`     | authed users |  Return all events that match text passed in |
 | POST   | `/meta/newSubscription`  | authed users | Adds a new subscription for the user         |
 | POST   | `/slackuser/newSlackUser`| authed users | Adds a new slack user to database            |
